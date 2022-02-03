@@ -1,7 +1,8 @@
 GTEST_PATH=$(CURDIR)/googletest
 LIBGTEST=$(GTEST_PATH)/build/lib/libgtest.a
 
-CXXFLAGS = -pg -g -ggdb
+
+CXXFLAGS = -g -ggdb
 CPPFLAGS = -I$(GTEST_PATH)/googletest/include
 LDFLAGS = -L$(GTEST_PATH)/build/lib
 LDLIBS = -lgtest -lpthread 
@@ -22,11 +23,24 @@ $(LIBGTEST):
 	cd $(GTEST_PATH)/build && cmake -DCMAKE_C_COMPILER='gcc' -DCMAKE_CXX_COMPILER='g++' ..
 	$(MAKE) -s -C $(GTEST_PATH)/build
 
+callgrind: app
+	valgrind --tool=callgrind --callgrind-out-file=callgrind.out ./main
+
+kcachegrind: callgrind
+	kcachegrind callgrind.out
+
+# Need a pip install
+gprof2dot: callgrind
+	gprof2dot -s -f callgrind callgrind.out | dot -Tsvg -o output.svg | gthumb output.svg
+
+gprof : CXXFLAGS = -pg -g -ggdb
 gprof: app
 	rm -f gmon.out analysis.txt
 	./main && gprof -b main gmon.out > analysis.txt
 	@echo "gprof generated to analysis.txt"
 
 clean:
+	rm -f main *.out *.gprof *.swp *.svg analysis.txt perf.* callgrind.*
+
+distclean: clean
 	cd $(GTEST_PATH) && git clean -xdf
-	rm -f main *.out *.gprof *.swp *.svg analysis.txt
