@@ -1,0 +1,4 @@
+*.swp
+googletest
+*.out
+main
