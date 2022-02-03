@@ -16,6 +16,7 @@ app: $(LIBGTEST)
 endif
 	g++ -o main main.cpp $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(LDLIBS)
 
+# git clone https://github.com/google/googletest.git
 $(LIBGTEST):
 	mkdir -p $(GTEST_PATH)/build
 	cd $(GTEST_PATH)/build && cmake -DCMAKE_C_COMPILER='gcc' -DCMAKE_CXX_COMPILER='g++' ..
