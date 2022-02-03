@@ -21,6 +21,11 @@ $(LIBGTEST):
 	cd $(GTEST_PATH)/build && cmake -DCMAKE_C_COMPILER='gcc' -DCMAKE_CXX_COMPILER='g++' ..
 	make -s -C $(GTEST_PATH)/build
 
+gprof: app
+	rm -f gmon.out analysis.txt
+	./main && gprof -b main gmon.out > analysis.txt
+	@echo "gprof generated to analysis.txt"
+
 clean:
 	cd $(GTEST_PATH) && git clean -xdf
-	rm -f main *.out *.gprof *.swp *.svg
+	rm -f main *.out *.gprof *.swp *.svg analysis.txt

@@ -17,9 +17,11 @@ TEST(module_name, test_name) {
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
-    (void) RUN_ALL_TESTS();
+    return RUN_ALL_TESTS();
+#if 0
     exit(0);
     return 0;
+#endif
 }
 
 // Build command: g++ main.cpp -lgtest
