@@ -20,7 +20,7 @@ endif
 $(LIBGTEST):
 	mkdir -p $(GTEST_PATH)/build
 	cd $(GTEST_PATH)/build && cmake -DCMAKE_C_COMPILER='gcc' -DCMAKE_CXX_COMPILER='g++' ..
-	make -s -C $(GTEST_PATH)/build
+	$(MAKE) -s -C $(GTEST_PATH)/build
 
 gprof: app
 	rm -f gmon.out analysis.txt
