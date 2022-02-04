@@ -2,7 +2,7 @@ GTEST_PATH=$(CURDIR)/googletest
 LIBGTEST=$(GTEST_PATH)/build/lib/libgtest.a
 
 
-CXXFLAGS = -g -ggdb
+CXXFLAGS = -g -ggdb -fno-omit-frame-pointer
 CPPFLAGS = -I$(GTEST_PATH)/googletest/include
 LDFLAGS = -L$(GTEST_PATH)/build/lib
 LDLIBS = -lgtest -lpthread 
